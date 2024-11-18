@@ -13,7 +13,7 @@ const Register = () => {
     const photoUrl = e.target.photoUrl.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const conPassword = e.target.conPassword.value; // Added to get the confirm password
+    const conPassword = e.target.conPassword.value;
 
     if (password.length < 6) {
       setError("Password must contain at least 6 characters");
