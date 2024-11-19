@@ -1,10 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./Provider/AuthProvider";
 
 const Login = () => {
   const { handleGoogleLogin, handleLogin } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from || "/";
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -13,20 +17,18 @@ const Login = () => {
 
     try {
       await handleLogin(email, password);
-      setError("");
+      navigate(from, { replace: true });
     } catch (err) {
-      setError("Failed to login. Please check your credentials.");
-      console.error(err);
+      setError(err.message);
     }
   };
 
   const handleGoogleLoginClick = async () => {
     try {
       await handleGoogleLogin();
-      setError("");
+      navigate(from, { replace: true });
     } catch (err) {
       setError("Google login failed. Please try again.");
-      console.error(err);
     }
   };
 
